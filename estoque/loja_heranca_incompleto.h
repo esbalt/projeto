@@ -1,0 +1,142 @@
+#ifndef _LOJA_H_
+#define _LOJA_H_
+
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+class Produto
+{
+private:
+    string nome;
+    unsigned preco;
+public:
+    inline Produto(const char *N="", unsigned P=0): nome(N), preco(P) {}
+
+    bool ler(istream &I);
+    void salvar(ostream &O) const;
+    void digitar();
+    inline void imprimir() const
+    {
+        salvar(cout);
+    };
+};
+class Livro: public Produto
+{
+private:
+string autor;
+public:
+    inline Livro(const char *N="", unsigned P=0, string A=""):Produto(N,P),autor(A) {}
+    //inline Produto(const char *N="", unsigned P=0): nome(N), preco(P) {}
+
+};
+class CD: public Produto
+{
+private:
+unsigned Nfaixas;
+public:
+    inline CD(const char *N="", unsigned P=0,unsigned A=0):Produto(N,P),Nfaixas(A) {}
+    //inline Produto(const char *N="", unsigned P=0): nome(N), preco(P) {}
+
+};
+class DVD: public Produto
+{
+private:
+unsigned Duracao;
+public:
+    inline DVD(const char *N="", unsigned P=0, unsigned A=0):Produto(N,P),Duracao(A) {}
+    //inline Produto(const char *N="", unsigned P=0): nome(N), preco(P) {}
+
+};
+
+// =========================================
+// Inclua aqui as classes Livro, CD e DVD
+// =========================================
+
+class ListaLivro
+{
+private:
+    Livro *x;
+    unsigned N;
+public:
+    // Inclua os construtores, destrutor e operadores necessarios
+    void incluir(const Livro &L);
+    bool excluir(unsigned id);
+
+    bool ler(istream &I);
+    void salvar(ostream &O) const;
+    void imprimir() const;
+};
+class ListaDVD
+{
+private:
+    Livro *x;
+    unsigned N;
+public:
+    // Inclua os construtores, destrutor e operadores necessarios
+    void incluir(const DVD &L);
+    bool excluir(unsigned id);
+
+    bool ler(istream &I);
+    void salvar(ostream &O) const;
+    void imprimir() const;
+};
+class ListaCD
+{
+private:
+    Livro *x;
+    unsigned N;
+public:
+    // Inclua os construtores, destrutor e operadores necessarios
+    void incluir(const CD &L);
+    bool excluir(unsigned id);
+
+    bool ler(istream &I);
+    void salvar(ostream &O) const;
+    void imprimir() const;
+};
+
+// =========================================
+// Inclua aqui as classes ListaCD e ListaDVD
+// =========================================
+
+class Loja
+{
+private:
+    ListaLivro LL;
+    ListaCD LC;
+    ListaDVD LD;
+public:
+    inline Loja(): LL(), LC(), LD() {}
+
+    inline void incluirLivro(const Livro &X)
+    {
+        LL.incluir(X);
+    }
+    inline bool excluirLivro(unsigned id)
+    {
+        return LL.excluir(id);
+    }
+    inline void incluirDVD(const DVD &X)
+    {
+        LD.incluir(X);
+    }
+    inline bool excluirDVD(unsigned id)
+    {
+        return LD.excluir(id);
+    }
+    inline void incluirCD(const CD &X)
+    {
+        LC.incluir(X);
+    }
+    inline bool excluirCD(unsigned id)
+    {
+        return LC.excluir(id);
+    }
+
+    bool ler(const string& arq);
+    bool salvar(const string& arq) const;
+    void imprimir() const;
+};
+#endif // _LOJA_H_
